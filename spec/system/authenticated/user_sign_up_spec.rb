@@ -11,7 +11,7 @@ describe "Usuário se cadastra" do
     fill_in "Nome",	with: 'João'
     fill_in "Sobrenome",	with: "Campos"  
     fill_in "CPF",	with: CPF.generate 
-    fill_in "E-mail",	with: "joao@gmail.com" 
+    fill_in "E-mail",	with: "joao1@gmail.com" 
     fill_in "Senha",	with: "password123456"
     fill_in "Confirme sua senha",	with: "password123456"  
     click_on 'Criar Conta'

@@ -1,7 +1,9 @@
+require 'rails_helper'
+
 describe "Usuário faz login" do
   it "com sucesso" do
     #arrange
-    User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+    User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao1@gmail.com", password: "password123456")
 
     #act  nome sobrenome cpf e-mail senha  confirmacao de senha cadastrar
     visit root_path
@@ -23,13 +25,13 @@ describe "Usuário faz login" do
   
   it "com dados diferentes" do
      #arrange
-     User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+     User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao1@gmail.com", password: "password123456")
 
      #act  
      visit root_path
      click_on "Entrar"
  
-     fill_in "E-mail",	with: "joaos@gmail.com" 
+     fill_in "E-mail",	with: "joaos1@gmail.com" 
      fill_in "Senha",	with: "password1234567" 
      within('form') do
        click_on 'Entrar'
@@ -43,7 +45,7 @@ describe "Usuário faz login" do
 
   it "e faz logout" do
       #arrange
-      User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+      User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao1@gmail.com", password: "password123456")
 
       #act  
       visit root_path
