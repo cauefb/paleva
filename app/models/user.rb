@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one :establishment, dependent: :destroy
+
   validates :name, :last_name, :cpf, presence: true
   validates :cpf, :email, uniqueness: true
   validate :cpf_must_be_valid       
