@@ -20,9 +20,14 @@
   <body>
     
    <header>
-      <h1>PaLevá</h1>
+      
       <nav>
-        
+        <% if user_signed_in?%>
+        <h1>PaLevá</h1>
+          <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
+          <%=  current_user.email%>
+        <% end %>
+          
       </nav>
    </header> 
    <div>
