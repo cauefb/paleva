@@ -16,7 +16,8 @@ describe "Usuário se cadastra" do
     fill_in "Confirme sua senha",	with: "password123456"  
     click_on 'Criar Conta'
     #assert
-    expect(page).to have_content 'Bem vindo! Você realizou seu registro com sucesso.'  
+    expect(page).to have_content 'Você precisa cadastrar um restaurante antes de continuar.'  
+    expect(current_path).to eq(new_establishment_path)  
   end
   
 end

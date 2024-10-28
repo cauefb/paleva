@@ -1,0 +1,38 @@
+<h1>Cadastro de Estabelecimento</h1>
+
+<%= form_with model: @establishment do | e | %>
+
+    <div>
+        <%= e.label :brand_name, "Nome Fantasia" %>
+        <%= e.text_field :brand_name %>
+    </div>
+
+    <div>
+        <%= e.label :corporate_name, "Razão Social" %>
+        <%= e.text_field :corporate_name %>
+    </div>
+
+    <div>
+        <%= e.label :cnpj, "CNPJ" %>
+        <%= e.text_field :cnpj %>
+    </div>
+
+    <div>
+        <%= e.label :address, "Endereço"%>
+        <%= e.text_field :address %>
+    </div>
+
+    <div>
+        <%= e.label :phone, "Telefone"%>
+        <%= e.text_field :phone%>
+    </div>
+
+    <div>
+        <%= e.label :email, "E-mail"%>
+        <%= e.text_field :email%>
+    </div>
+
+
+
+  <%= e.submit 'Cadastrar Restaurante'%>
+<% end %>
