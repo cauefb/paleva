@@ -24,16 +24,22 @@
       <nav>
         <% if user_signed_in?%>
         <h1>PaLevá</h1>
+          <% if current_user.establishment&.id %>
+            <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %>
+          <% end %>
           <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
           <%=  current_user.email%>
         <% end %>
           
       </nav>
    </header> 
-   <div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-   </div>
+ <% if flash[:notice] %>
+    <div class="alert alert-notice"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
     <%= yield %>
   </body>
 </html>

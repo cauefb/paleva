@@ -1,0 +1,57 @@
+
+
+<%= form_with model: @establishment, local: true do | e | %>
+
+    <div>
+        <%= e.label :brand_name, "Nome Fantasia" %>
+        <%= e.text_field :brand_name %>
+    </div>
+
+    <div>
+        <%= e.label :corporate_name, "Razão Social" %>
+        <%= e.text_field :corporate_name %>
+    </div>
+
+    <div>
+        <%= e.label :cnpj, "CNPJ" %>
+        <%= e.text_field :cnpj %>
+    </div>
+
+    <div>
+        <%= e.label :address, "Endereço"%>
+        <%= e.text_field :address %>
+    </div>
+
+    <div>
+        <%= e.label :phone, "Telefone"%>
+        <%= e.text_field :phone%>
+    </div>
+
+    <div>
+        <%= e.label :email, "E-mail"%>
+        <%= e.text_field :email%>
+    </div>
+
+<div class="title">Horário de funcionamento</div>
+<%= e.fields_for :opening_hours do |oh| %>
+  <div id="<%= oh.object.day_of_week.downcase %>">
+    <div >
+      <%= oh.label :day_of_week, oh.object.day_of_week %>
+      <%= oh.hidden_field :day_of_week %>
+  
+      <%= oh.label :open_time, "Horário de Abertura"  %>
+      <%= oh.time_field :open_time %>
+  
+      <%= oh.label :close_time, "Horário de Fechamento" %>
+      <%= oh.time_field :close_time %>
+   
+      <%= oh.label :closed, 'Fechado', class: 'form-label flex-item' %>
+      <%= oh.check_box :closed %>
+    </div>
+  </div>
+<% end %>
+
+
+
+  <%= e.submit 'Salvar'%>
+<% end %>

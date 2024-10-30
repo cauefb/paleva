@@ -1,4 +1,4 @@
-<h1>Cadastrar Restaurante</h1>
+<h1 class='title'>Editar Restaurante</h1>
 
 <% if @establishment.errors.any? %>
   <p>Verifique os erros abaixo:</p>
@@ -10,9 +10,4 @@
      <% end %>
   </ul>
 <% end %>
-<% if flash[:alert] %>
-  <p><%= flash[:alert] %></p>
-<% elsif flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
-<%= render 'form' %>
+  <%= render 'form' %>

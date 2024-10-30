@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   # Before actions
-  before_action :redirect_to_login
+  #before_action :redirect_to_login
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :check_restaurant_presence, if: :root_path_accessed?
+  before_action :check_restaurant_presence, if: -> { request.path == root_path }
 
   protected
 
@@ -27,10 +27,5 @@ class ApplicationController < ActionController::Base
     if user_signed_in? && current_user.establishment.nil?
       redirect_to new_establishment_path, alert: 'Você precisa cadastrar um restaurante antes de continuar.'
     end
-  end
-
-  # Verifica se a rota acessada é a root path
-  def root_path_accessed?
-    request.path == root_path
   end
 end

@@ -37,12 +37,14 @@
     <% @opening_hours.each do |opening_hour| %>
       <li>
         <strong>Dia:</strong> <%= opening_hour.day_of_week.capitalize %><br>
-        <% if opening_hour.closed %>
-          <strong>Fechado</strong>
-        <% else %>
+      <% if opening_hour.closed %>
+        <strong>Fechado</strong>
+      <% else %>
+        <% if opening_hour.open_time.present? && opening_hour.close_time.present? %>
           <strong>Horário de Abertura:</strong> <%= opening_hour.open_time.strftime("%H:%M") %><br>
           <strong>Horário de Fechamento:</strong> <%= opening_hour.close_time.strftime("%H:%M") %>
         <% end %>
+      <% end %>
       </li>
     <% end %>
   </ul>
@@ -51,5 +53,5 @@
 <% end %>
 
 <%= link_to 'Editar', edit_establishment_path(@establishment) %> |
-<%= link_to 'Voltar', establishments_path %> |
-<%= link_to 'Adicionar horários de funcionamento', new_establishment_opening_hour_path(@establishment) %>
+<%= link_to 'Voltar', root_path %> |
+

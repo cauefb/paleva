@@ -1,6 +1,8 @@
 class Establishment < ApplicationRecord
   belongs_to :user
-  has_many :opening_hours, dependent: :destroy
+  #has_many :opening_hours, dependent: :destroy
+  has_many :opening_hours, inverse_of: :establishment, dependent: :destroy
+  accepts_nested_attributes_for :opening_hours
   
   validates :brand_name,:corporate_name, :cnpj, :address, :phone, :email, presence: true
   validates :phone, length: { in: 10..11}

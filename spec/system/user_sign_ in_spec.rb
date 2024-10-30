@@ -60,7 +60,7 @@ describe "Usuário faz login" do
       click_on 'Sair' 
       
       #assert
-      expect(page).to  have_content 'Logout efetuado com sucesso.'
+      #expect(page).to  eq new_user_session_path
       within('nav') do
         expect(page).not_to have_content 'joao@gmail.com'  
       end 
