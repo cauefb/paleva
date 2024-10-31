@@ -1,6 +1,6 @@
 class DishesController < ApplicationController 
     
-    before_action :set_dish, only: [:edit, :show, :update]
+    before_action :set_dish, only: [:edit, :show, :update, :destroy]
 
     def index
       if params[:establishment_id]
@@ -30,6 +30,16 @@ class DishesController < ApplicationController
       end
     end
 
+    def destroy
+      @dish = Dish.find(params[:id])
+      if @dish.destroy
+        redirect_to establishment_dishes_path(@dish.establishment), notice: 'Prato deletado com sucesso'
+      else
+        redirect_to establishment_dish_path(@dish.establishment, @dish), alert: 'Não foi possível deletar o prato.'
+      end
+    end
+  
+
     def edit
       
     end
@@ -38,12 +48,19 @@ class DishesController < ApplicationController
       
     end
 
+    
+
     def update
-      puts("caiu aqui")
       if @dish.update(dish_params)
         redirect_to establishment_dish_path(current_user.establishment, @dish), 
                          notice: 'Prato atualizado com sucesso'
       end
+    end
+
+    private
+
+    def set_establishment
+      @establishment = Establishment.find(params[:establishment_id])
     end
 
     def dish_params
