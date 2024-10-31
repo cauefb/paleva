@@ -1,0 +1,23 @@
+pt-BR:
+  activerecord:
+    models:
+      user: Usuário
+      establishment: Estabelecimento
+      dish: Prato
+    attributes:
+      user:
+        name: Nome
+        last_name: Sobrenome
+        cpf: CPF  
+      establishment:
+        brand_name: Nome Fantasia
+        corporate_name: Razão Social
+        cnpj: CNPJ  
+        address: Endereço 
+        phone: Telefone 
+        email: E-mail
+      dish:
+        name: Nome
+        description: Descrição
+        calories: Calorias
+        photo: Foto
