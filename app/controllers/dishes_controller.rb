@@ -2,8 +2,17 @@ class DishesController < ApplicationController
     
     before_action :set_dish, only: [:edit, :show, :update]
 
-    def  index
-      
+    def index
+      if params[:establishment_id]
+        # Quando a rota está no contexto de um estabelecimento específico
+        @establishment = Establishment.find(params[:establishment_id])
+        @dishes = @establishment.dishes
+      elsif current_user.establishment
+        # Quando a rota é chamada sem um `establishment_id`, exibe os pratos do restaurante do usuário logado
+        @dishes = current_user.establishment.dishes
+      else
+        redirect_to root_path, alert: 'Você precisa cadastrar um restaurante para ver seus pratos.'
+      end
     end
 
     def new

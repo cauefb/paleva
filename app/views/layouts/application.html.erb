@@ -26,6 +26,7 @@
         <h1>PaLevá</h1>
           <% if current_user.establishment&.id %>
             <%= link_to 'Cadastrar Novo Prato', new_establishment_dish_path(current_user.establishment.id)%> | 
+            <%= link_to 'Meus Pratos', establishment_dishes_path(current_user.establishment.id)%> | 
             <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %> |  
           <% end %>
           <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
