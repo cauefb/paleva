@@ -1,7 +1,7 @@
 class BeveragesController < ApplicationController 
   before_action :authenticate_user!
   before_action :set_establishment
-  #before_action :set_beverage, only: [:edit, :show, :update, :destroy]
+  before_action :set_beverage, only: [:edit, :show, :update]
 
   def index
     if params[:establishment_id]       
@@ -28,16 +28,20 @@ class BeveragesController < ApplicationController
     end
   end
 
-
-
-
-
   def show
-    @beverage = Beverage.find(params[:id])
+    
   end
 
-  
+  def edit
+      
+  end
 
+  def update
+    if @beverage.update(beverage_params)
+      redirect_to establishment_beverage_path(current_user.establishment, @beverage), 
+                       notice: 'Bebida atualizada com sucesso'
+    end
+  end
 
 
   private

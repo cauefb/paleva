@@ -14,7 +14,7 @@
     <dt><%= Beverage.human_attribute_name(:is_alcholic) %>:</dt>
     <dd><%= @beverage.is_alcholic ? 'Sim' : 'Não' %></dd>
 
-    <%= button_to 'Editar bebida',
+    <%= link_to 'Editar bebida',
       edit_establishment_beverage_path(current_user.establishment.id, @beverage.id) %>
 
     <%= button_to 'Remover', establishment_beverage_path(current_user.establishment, @beverage.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover esta bebida?' } %>
