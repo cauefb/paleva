@@ -43,7 +43,14 @@ class BeveragesController < ApplicationController
     end
   end
 
-
+  def destroy
+    @beverage = Beverage.find(params[:id])
+    if @beverage.destroy
+      redirect_to establishment_beverages_path(@beverage.establishment), notice: 'Bebida deletada com sucesso'
+    else
+      redirect_to establishment_beverages_path(@beverage.establishment, @beverage), alert: 'Não foi possível deletar a bebida.'
+    end
+  end
   private
 
   def set_establishment
