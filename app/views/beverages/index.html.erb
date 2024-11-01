@@ -1,0 +1,28 @@
+<h1>Bebidas</h1>
+
+<div class="row">
+  <% if @beverages.any? %>
+    <% @beverages.each do |beverage| %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <% if beverage.image.attached? %>
+            <%= image_tag beverage.image, class: "card-img-top img-fluid", style: "max-height: 200px; object-fit: cover;", alt: beverage.name %>
+          <% else %>
+            <img src="https://via.placeholder.com/150" class="card-img-top img-fluid" style="max-height: 200px; object-fit: cover;" alt="Imagem não disponível">
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= beverage.name %></h5>
+            <p class="card-text"><%= beverage.description %></p>
+            <% if beverage.calories.present? %>
+              <p class="card-text"><strong>Calorias:</strong> <%= beverage.calories %></p>
+            <% end %>
+                <p class="card-text"><strong>Alcoólico</strong> <%= beverage.is_alcholic ? 'Sim' : 'Não' %></p>
+            <%= link_to 'Ver Detalhes', establishment_beverage_path(beverage.establishment, beverage), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Nenhum prato cadastrado.</p>
+  <% end %>
+</div>
