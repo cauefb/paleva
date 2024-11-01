@@ -17,7 +17,7 @@ describe "Usuário edita um prato" do
     click_on 'Meus Pratos'
     click_on 'Ver Detalhes'
     click_on 'Editar prato'
-    fill_in "Nome",	with: "Lasanha bolonhesa"
+    fill_in "Nome",	with: 'Lasanha bolonhesa'
     fill_in "Descrição",	with: "lasanha bolonhessa com muito queijo"  
     click_on 'Salvar'
 
