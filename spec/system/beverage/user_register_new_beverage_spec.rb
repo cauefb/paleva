@@ -18,20 +18,22 @@ describe "Usuário logado " do
       user.establishment = establishment
       #act
       
-
+      login_as user
       visit root_path
  
       click_on 'Cadastrar Bebida'
       fill_in "Nome",	with: "Bebida teste"
       fill_in "Descrição",	with: "Descriçao da bebida"
-      fill_in "Calorias",	with: "400"     
+      fill_in "Calorias",	with: "400" 
+      check('Alcoólico')   
       click_on "Salvar"  
 
       #assert
-      expect(page).to have_content 'Bebida cadastrado com sucesso'  
+      expect(page).to have_content 'Bebida cadastrada com sucesso'  
       expect(page).to have_content 'Bebida teste' 
-      expect(page).to have_content 'Descriçao da Bebida'
+      expect(page).to have_content 'Descriçao da bebida'
       expect(page).to have_content '400' 
+      expect(page).to have_content 'Sim'
    end 
 
   #  it "com dados faltando" do

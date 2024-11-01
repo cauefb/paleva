@@ -1,0 +1,28 @@
+<%= form_with(model: [current_user.establishment, @beverage], local: true) do |form| %>
+  <div>
+    <%= form.label :name, Beverage.human_attribute_name(:name)  %>
+    <%= form.text_field :name%>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :is_alcholic %>
+    <%= form.check_box :is_alcholic %>
+  </div>
+
+  <div>
+    <%= form.label :calories %>
+    <%= form.number_field :calories %>
+  </div>
+  <div>
+    <%= form.label :image, Dish.human_attribute_name(:image)%>
+    <%= form.file_field :image %>
+  </div>
+  <div>
+    <%= form.submit "Salvar" %>
+  </div>
+<% end %>

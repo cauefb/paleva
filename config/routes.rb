@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root to: "home#index"
   resources :establishments, only: [:show, :new, :create,:edit, :update] do
     resources :dishes, only: [:index, :show, :new, :create,:edit,:update, :destroy]
+    resources :beverages, only: [:index, :show, :new, :create,:edit,:update, :destroy]
   end
 end

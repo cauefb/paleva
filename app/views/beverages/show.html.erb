@@ -1,0 +1,22 @@
+<div>
+  <dl>
+    <%= image_tag(url_for(@beverage.image), class: 'img-thumbnail') if @beverage.image&.attached? %>
+
+    <dt><%= Beverage.human_attribute_name(:name) %>:</dt>
+    <dd><%= @beverage.name %></dd>
+
+    <dt><%= Beverage.human_attribute_name(:description) %>:</dt>
+    <dd><%= @beverage.description %></dd>
+
+    <dt><%= Beverage.human_attribute_name(:calories) %>:</dt>
+    <dd><%= @beverage.calories.present? ? @beverage.calories : 'Não informada' %></dd>
+
+    <dt><%= Beverage.human_attribute_name(:is_alcholic) %>:</dt>
+    <dd><%= @beverage.is_alcholic ? 'Sim' : 'Não' %></dd>
+
+    <%= button_to 'Editar bebida',
+      edit_establishment_beverage_path(current_user.establishment.id, @beverage.id) %>
+
+    <%= button_to 'Remover', establishment_beverage_path(current_user.establishment, @beverage.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover esta bebida?' } %>
+  </dl>
+</div>
