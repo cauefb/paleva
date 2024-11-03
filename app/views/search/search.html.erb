@@ -1,0 +1,31 @@
+<h2>Resultados da Busca</h2>
+
+<% if @dishes.any?%>
+<h3>Pratos</h3>
+<ul>
+  <% @dishes.each do |dish| %>
+    <li>
+      <%= link_to dish.name  %> 
+       <%= link_to 'Editar Prato',
+      edit_establishment_beverage_path(current_user.establishment.id, dish.id) %>
+    </li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if @beverages.any?%>
+<h3>Bebidas</h3>
+<ul>
+  <% @beverages.each do |beverage| %>
+    <li>
+      <%= link_to beverage.name%> 
+      <%= link_to 'Editar bebida',
+      edit_establishment_beverage_path(current_user.establishment.id, beverage.id) %>
+    </li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if @dishes.empty? && @beverages.empty? %>
+  <p>Nenhum item encontrado.</p>
+<% end %>

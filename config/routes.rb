@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     resources :dishes, only: [:index, :show, :new, :create,:edit,:update, :destroy]
     resources :beverages, only: [:index, :show, :new, :create,:edit,:update, :destroy]
   end
+  get 'search', to: 'search#search'
 end
