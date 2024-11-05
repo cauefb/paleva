@@ -1,7 +1,7 @@
 class BeveragesController < ApplicationController 
   before_action :authenticate_user!
   before_action :set_establishment
-  before_action :set_beverage, only: [:edit, :show, :update]
+  before_action :set_beverage, only: [:edit, :show, :update, :enabled, :disabled]
 
   def index
     if params[:establishment_id]       
@@ -41,6 +41,16 @@ class BeveragesController < ApplicationController
       redirect_to establishment_beverage_path(current_user.establishment, @beverage), 
                        notice: 'Bebida atualizada com sucesso'
     end
+  end
+
+  def disabled
+    @beverage.update(active: false)
+    redirect_to establishment_beverage_path(@beverage.establishment, @beverage)
+  end
+  
+  def enabled
+    @beverage.update(active: true)
+    redirect_to establishment_beverage_path(@beverage.establishment, @beverage)
   end
 
   def destroy

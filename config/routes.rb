@@ -6,7 +6,10 @@ Rails.application.routes.draw do
       post 'enabled', on: :member
       post 'disabled', on: :member
     end
-    resources :beverages, only: [:index, :show, :new, :create,:edit,:update, :destroy]
+    resources :beverages, only: [:index, :show, :new, :create,:edit,:update, :destroy] do
+      post 'enabled', on: :member
+      post 'disabled', on: :member
+    end
   end
   get 'search', to: 'search#search'
 end
