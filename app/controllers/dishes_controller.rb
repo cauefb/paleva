@@ -1,7 +1,7 @@
 class DishesController < ApplicationController 
     before_action :authenticate_user!
     before_action :set_establishment
-    before_action :set_dish, only: [:edit, :show, :update, :destroy]
+    before_action :set_dish, only: [:edit, :show, :update, :destroy, :enabled, :disabled]
 
     def index
       if params[:establishment_id]       
@@ -47,13 +47,21 @@ class DishesController < ApplicationController
       
     end
 
-    
-
     def update
       if @dish.update(dish_params)
         redirect_to establishment_dish_path(current_user.establishment, @dish), 
                          notice: 'Prato atualizado com sucesso'
       end
+    end
+
+    def disabled
+      @dish.update(active: false)
+      redirect_to establishment_dish_path(@dish.establishment, @dish)
+    end
+    
+    def enabled
+      @dish.update(active: true)
+      redirect_to establishment_dish_path(@dish.establishment, @dish)
     end
 
     private

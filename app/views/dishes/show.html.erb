@@ -12,9 +12,15 @@
 
         <dt><%= Dish.human_attribute_name(:calories) %>:</dt>                                                    
         <dd><%= @dish.calories.present? ? @dish.calories : 'Não informada' %></dd>
-
+        <div>
+          <% if @dish.active? %>
+            <%= button_to 'Desativar', disabled_establishment_dish_path(current_user.establishment.id, @dish.id), method: :post %>
+          <% else %>
+            <%= button_to 'Ativar', enabled_establishment_dish_path(current_user.establishment.id, +@dish.id),method: :post  %>
+          <% end %>
+        </div>
         <%= link_to 'Editar prato',
-          edit_establishment_dish_path(current_user.establishment.id, @dish.id) %>
+          edit_establishment_dish_path(current_user.establishment.id, @dish) %>
 
       <%= button_to 'Remover', establishment_dish_path(current_user.establishment, @dish.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover este prato?' } %>
 

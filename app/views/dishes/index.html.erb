@@ -13,6 +13,7 @@
           <div class="card-body">
             <h5 class="card-title"><%= dish.name %></h5>
             <p class="card-text"><%= dish.description %></p>
+            <p class="card-text"><strong>Ativo:</strong> <%= dish.active ? 'Sim' : 'Não' %></p>
             <% if dish.calories.present? %>
               <p class="card-text"><strong>Calorias:</strong> <%= dish.calories %></p>
             <% end %>

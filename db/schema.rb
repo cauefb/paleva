@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_01_012042) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_001028) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_012042) do
     t.integer "establishment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["establishment_id"], name: "index_beverages_on_establishment_id"
   end
 
@@ -57,6 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_012042) do
     t.integer "establishment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["establishment_id"], name: "index_dishes_on_establishment_id"
   end
 
