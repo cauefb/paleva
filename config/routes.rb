@@ -11,5 +11,14 @@ Rails.application.routes.draw do
       post 'disabled', on: :member
     end
   end
+
+  resources :dishes, only: [] do
+    resources :portions, only: [:index, :show, :new, :create, :edit, :update]
+  end
+  
+  resources :beverages, only: [] do
+    resources :portions, only: [:index, :show, :new, :create, :edit, :update]
+  end
+
   get 'search', to: 'search#search'
 end

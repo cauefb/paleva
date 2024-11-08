@@ -1,4 +1,4 @@
-require 'rails-helper '
+require 'rails_helper'
 
 describe "Usuário logado cadastra uma porção" do
   it "apartir da listagem de pratos" do

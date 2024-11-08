@@ -1,0 +1,14 @@
+<h1>Editar porção <%= @portion.description %></h1>
+
+<% if @portion.errors.any? %>
+  <p>Verifique os erros abaixo:</p>
+  <ul>
+    <% @portion.errors.full_messages.each do |msg|%>
+     <li>
+        <%= msg %>
+     </li>
+     <% end %>
+  </ul>
+<% end %>
+
+<%= render 'form' %>

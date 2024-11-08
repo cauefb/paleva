@@ -29,7 +29,7 @@ class BeveragesController < ApplicationController
   end
 
   def show
-    
+    @portions = @beverage.portions
   end
 
   def edit

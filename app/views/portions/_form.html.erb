@@ -1,0 +1,18 @@
+<%= form_with(model: [@parent, @portion]) do |f| %>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+<div>
+  <%= f.label :price %>
+  <%= f.text_field :price, value: @portion.price.present? ? number_with_precision(@portion.price / 100.0, precision: 2).to_s.tr('.', ',') : '' %>
+</div>
+  <div>
+    <%= f.submit 'Enviar' %>
+  </div>
+<% end %>
+<% if @parent.is_a?(Dish)%>
+  <%= link_to 'Voltar', establishment_dish_path(current_user.establishment, @parent)%>
+<% else %>
+ <%= link_to 'Voltar', establishment_beverage_path(current_user.establishment, @parent)%>
+<% end %>

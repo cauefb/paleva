@@ -22,8 +22,44 @@
         <%= link_to 'Editar prato',
           edit_establishment_dish_path(current_user.establishment.id, @dish) %>
 
-      <%= button_to 'Remover', establishment_dish_path(current_user.establishment, @dish.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover este prato?' } %>
+          <div>
+            <%= link_to 'Cadastrar Porção', new_dish_portion_path(dish_id: @dish.id)%>
+          </div>
 
+ <h3>Porções</h3>
+  <dl>
+   <% @dish.portions.each do |portion| %>
+    <dt><%= portion.description %>:</dt>
+    <dd><%= number_to_currency(portion.price / 100.0, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></dd>
+
+    <%= link_to 'Editar Porção', edit_dish_portion_path(dish_id: @dish.id ,id: portion.id) %>
+  <% end %>
+  </dl>
+</div>
                                                                                                                                                                                                         
   </dl>
 </div>
+
+<table id="price-histories">
+  <thead>
+    <tr>
+      <th>Porções</th>
+      <th>Preços</th>
+      <th>Última atualização</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <% @portions.each do |portion| %>
+    <% portion.portion_price_histories.each do |price| %>
+  
+      <tr>
+        <td><%= portion.description %></td>
+        <td><%= price.price %></td>
+        <td><%= price.date %></td>
+      </tr>
+    
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_05_001028) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_133723) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -87,6 +87,26 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_001028) do
     t.index ["establishment_id"], name: "index_opening_hours_on_establishment_id"
   end
 
+  create_table "portion_price_histories", force: :cascade do |t|
+    t.integer "portion_id", null: false
+    t.integer "price", null: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portion_id"], name: "index_portion_price_histories_on_portion_id"
+  end
+
+  create_table "portions", force: :cascade do |t|
+    t.string "description", null: false
+    t.integer "price", null: false
+    t.integer "dish_id"
+    t.integer "beverage_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beverage_id"], name: "index_portions_on_beverage_id"
+    t.index ["dish_id"], name: "index_portions_on_dish_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -108,4 +128,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_001028) do
   add_foreign_key "dishes", "establishments"
   add_foreign_key "establishments", "users"
   add_foreign_key "opening_hours", "establishments"
+  add_foreign_key "portion_price_histories", "portions"
+  add_foreign_key "portions", "beverages"
+  add_foreign_key "portions", "dishes"
 end

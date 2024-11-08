@@ -11,6 +11,9 @@
     <dt><%= Beverage.human_attribute_name(:calories) %>:</dt>
     <dd><%= @beverage.calories.present? ? @beverage.calories : 'Não informada' %></dd>
 
+    <dt><%= Beverage.human_attribute_name(:is_alcholic) %>:</dt>
+    <dd><%= @beverage.is_alcholic ? 'Sim' : 'Não' %></dd>
+
     <div>
       <% if @beverage.active? %>
         <%= button_to 'Desativar', disabled_establishment_beverage_path(current_user.establishment.id, @beverage.id), method: :post %>
@@ -19,12 +22,47 @@
       <% end %>
     </div>
 
-    <dt><%= Beverage.human_attribute_name(:is_alcholic) %>:</dt>
-    <dd><%= @beverage.is_alcholic ? 'Sim' : 'Não' %></dd>
-
     <%= link_to 'Editar bebida',
       edit_establishment_beverage_path(current_user.establishment.id, @beverage.id) %>
+  <div>
+    <%= link_to 'Cadastrar Porção', new_beverage_portion_path(beverage_id: @beverage.id)%>
+  </div>
+   
+<div>
+  <h3>Porções</h3>
+  <dl>
+   <% @beverage.portions.each do |portion| %>
+    <dt><%= portion.description %>:</dt>
+    <dd><%= number_to_currency(portion.price / 100.0, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></dd>
 
-    <%= button_to 'Remover', establishment_beverage_path(current_user.establishment, @beverage.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover esta bebida?' } %>
+    <%= link_to 'Editar Porção', edit_beverage_portion_path(beverage_id: @beverage.id ,id: portion.id) %>
+  <% end %>
   </dl>
 </div>
+  </dl>
+</div>
+
+
+<table id="price-histories">
+  <thead>
+    <tr>
+      <th>Porções</th>
+      <th>Preços</th>
+      <th>Última atualização</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <% @portions.each do |portion| %>
+    <% portion.portion_price_histories.each do |price| %>
+  
+      <tr>
+        <td><%= portion.description %></td>
+         <td><%= number_to_currency(price.price/100.0, unit: "R$", separator: ",", delimiter: ".") %></td>
+        <td><%= price.date.in_time_zone.strftime('%d/%m/%Y %H:%M') %></td>
+      </tr>
+    
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

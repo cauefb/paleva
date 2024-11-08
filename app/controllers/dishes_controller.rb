@@ -44,7 +44,7 @@ class DishesController < ApplicationController
     end
 
     def show
-      
+      @portions = @dish.portions
     end
 
     def update

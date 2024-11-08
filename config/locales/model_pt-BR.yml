@@ -5,6 +5,7 @@ pt-BR:
       establishment: Estabelecimento
       dish: Prato
       beverage: Bebida
+      portion: Porção
     attributes:
       user:
         name: Nome
@@ -28,3 +29,6 @@ pt-BR:
         calories: Calorias
         photo: Foto
         is_alcholic: Alcoólico
+      portion:
+        description: Descrição
+        price: Preço  
