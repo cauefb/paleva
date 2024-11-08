@@ -7,7 +7,7 @@ describe "Usuário edita uma porção" do
     establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
       cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
     beverage =  Beverage.create!(name: 'Suco de abacaxi', description: '100% natural', calories: '700',is_alcholic: 0, establishment: establishment)
-      Portion.create!(description: '600ml', price: 800, dish: beverage )
+      Portion.create!(description: '600ml', price: 800, beverage: beverage )
 
     #act
     login_as user
@@ -15,8 +15,10 @@ describe "Usuário edita uma porção" do
     click_on 'Minhas Bebidas'
     click_on 'Ver Detalhes'
     click_on 'Editar Porção'
-    fill_in "Descição",	with: "1 litro"
+    fill_in "Descrição",	with: "1 litro"
     fill_in "Preço",	with: "15,00"
+    click_on 'Enviar'
+
     
     #assert
     expect(page).to have_content 'Porção editada com sucesso.'
@@ -24,6 +26,7 @@ describe "Usuário edita uma porção" do
     expect(page).to have_content '15,00'   
 
   end
+  
   it "de prato" do
     user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
     establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
@@ -36,8 +39,9 @@ describe "Usuário edita uma porção" do
     click_on 'Meus Pratos'
     click_on 'Ver Detalhes'
     click_on 'Editar Porção'
-    fill_in "Descição",	with: "Porção Grande"
+    fill_in "Descrição",	with: "Porção Grande"
     fill_in "Preço",	with: "50,00"
+    click_on 'Enviar'
 
     expect(page).to have_content 'Porção editada com sucesso.'
     expect(page).to have_content 'Porção Grande'    
