@@ -1,0 +1,13 @@
+<%= form_with model: @tag, local: true do |form| %>
+  <div class="field">
+    <%= form.label :name, 'Nome da Tag' %>
+    <%= form.text_field :name, required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Criar Tag' %>
+  </div>
+<% end %>
+
+<hr>
+

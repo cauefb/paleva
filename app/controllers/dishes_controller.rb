@@ -16,10 +16,11 @@ class DishesController < ApplicationController
 
     def new
       @dish = Dish.new
+      @tags = Tag.all
     end
 
     def create
-      
+      @tags = Tag.all
       @dish = Dish.new(dish_params)
       @dish.establishment = Establishment.find(params[:establishment_id])
       if @dish.save
@@ -40,7 +41,7 @@ class DishesController < ApplicationController
   
 
     def edit
-      
+      @tags = Tag.all
     end
 
     def show
@@ -48,6 +49,7 @@ class DishesController < ApplicationController
     end
 
     def update
+      @tags = Tag.all
       if @dish.update(dish_params)
         redirect_to establishment_dish_path(current_user.establishment, @dish), 
                          notice: 'Prato atualizado com sucesso'
@@ -61,6 +63,33 @@ class DishesController < ApplicationController
     
     def enabled
       @dish.update(active: true)
+      redirect_to establishment_dish_path(@dish.establishment, @dish)
+    end
+
+    def add_tag
+      @dish = Dish.find(params[:id])
+      tag = Tag.find(params[:tag_id])
+    
+      # Adiciona a tag ao prato, se ainda não estiver associada
+      unless @dish.tags.include?(tag)
+        @dish.tags << tag
+        flash[:notice] = "Tag adicionada com sucesso!"
+      else
+        flash[:alert] = "A tag já está associada a este prato."
+      end
+    
+      # Recarrega a página para mostrar a lista atualizada de tags
+      redirect_to establishment_dish_path(@dish.establishment, @dish)
+    end
+  
+    def remove_tag
+      @dish = Dish.find(params[:id])
+      tag = Tag.find(params[:tag_id])
+    
+      # Remove a tag da associação, sem excluir a tag do banco
+      @dish.tags.delete(tag)
+    
+      flash[:notice] = "Tag removida com sucesso!"
       redirect_to establishment_dish_path(@dish.establishment, @dish)
     end
 

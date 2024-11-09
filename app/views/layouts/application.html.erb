@@ -29,7 +29,8 @@
             <%= link_to 'Cadastrar Bebida', new_establishment_beverage_path(current_user.establishment.id)%> | 
             <%= link_to 'Meus Pratos', establishment_dishes_path(current_user.establishment.id)%> | 
             <%= link_to 'Minhas Bebidas', establishment_beverages_path(current_user.establishment.id)%> | 
-            <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %> 
+            <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %> |
+            <%= link_to 'Tags', new_tag_path%>
 
             <%= form_with(url: search_path, method: :get) do |f| %>
             <%= f.label :query, 'Buscar' %>

@@ -12,6 +12,31 @@
 
         <dt><%= Dish.human_attribute_name(:calories) %>:</dt>                                                    
         <dd><%= @dish.calories.present? ? @dish.calories : 'Não informada' %></dd>
+
+          <!-- Exibe as tags já associadas ao prato -->
+        <ul>
+          <% @dish.tags.each do |tag| %>
+            <li>
+              <%= tag.name %>
+              <%= button_to 'Excluir', remove_tag_establishment_dish_path(@dish.establishment, @dish, tag_id: tag.id), method: :delete, data: { confirm: 'Tem certeza que deseja remover esta tag?' }, class: 'btn btn-danger btn-sm' %> 
+            </li>
+          <% end %>
+        </ul>
+
+
+
+      <!-- Formulário para adicionar uma nova tag -->
+      <%= form_with url: add_tag_establishment_dish_path(@dish.establishment, @dish), method: :post, local: true do |form| %>
+        <div class="field">
+          <%= label_tag :tag_id, "Adicionar Tag" %>
+          <%= select_tag :tag_id, options_from_collection_for_select(Tag.all, :id, :name), prompt: "Selecione uma tag" %>
+        </div>
+        
+        <div class="actions">
+          <%= submit_tag "Adicionar Tag" %>
+        </div>
+          <% end %>
+        </div>
         <div>
           <% if @dish.active? %>
             <%= button_to 'Desativar', disabled_establishment_dish_path(current_user.establishment.id, @dish.id), method: :post %>

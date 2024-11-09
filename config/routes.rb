@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :dishes, only: [:index, :show, :new, :create,:edit,:update, :destroy] do
       post 'enabled', on: :member
       post 'disabled', on: :member
+      post 'add_tag', on: :member
+      delete 'remove_tag', on: :member
     end
     resources :beverages, only: [:index, :show, :new, :create,:edit,:update, :destroy] do
       post 'enabled', on: :member
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
   resources :beverages, only: [] do
     resources :portions, only: [:index, :show, :new, :create, :edit, :update]
   end
+
+  resources :tags
 
   get 'search', to: 'search#search'
 end

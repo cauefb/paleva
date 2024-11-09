@@ -1,0 +1,26 @@
+<h1>Cadastro de Tags</h1>
+<% if @tag.errors.any? %>
+  <p>Verifique os erros abaixo:</p>
+  <ul>
+    <% @tag.errors.full_messages.each do |msg|%>
+     <li>
+        <%= msg %>
+     </li>
+     <% end %>
+  </ul>
+<% end %>
+<%= render 'form' %>
+
+<h3>Tags Cadastradas</h3>
+
+<% if @tags.any? %>
+  <ul>
+    <% @tags.each do |tag| %>
+      <li><%= tag.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Não há nenhuma tag cadastrada.</p>
+<% end %>
+
+<%= link_to 'Voltar', root_path %>

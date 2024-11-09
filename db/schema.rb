@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_08_133723) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,6 +49,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_133723) do
     t.datetime "updated_at", null: false
     t.boolean "active", default: true
     t.index ["establishment_id"], name: "index_beverages_on_establishment_id"
+  end
+
+  create_table "dish_tags", force: :cascade do |t|
+    t.integer "dish_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dish_id"], name: "index_dish_tags_on_dish_id"
+    t.index ["tag_id"], name: "index_dish_tags_on_tag_id"
   end
 
   create_table "dishes", force: :cascade do |t|
@@ -107,6 +116,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_133723) do
     t.index ["dish_id"], name: "index_portions_on_dish_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -125,6 +141,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_133723) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "beverages", "establishments"
+  add_foreign_key "dish_tags", "dishes"
+  add_foreign_key "dish_tags", "tags"
   add_foreign_key "dishes", "establishments"
   add_foreign_key "establishments", "users"
   add_foreign_key "opening_hours", "establishments"
