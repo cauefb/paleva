@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_10_024236) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -51,6 +51,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
     t.index ["establishment_id"], name: "index_beverages_on_establishment_id"
   end
 
+  create_table "beverages_menus", id: false, force: :cascade do |t|
+    t.integer "menu_id", null: false
+    t.integer "beverage_id", null: false
+    t.index ["beverage_id", "menu_id"], name: "index_beverages_menus_on_beverage_id_and_menu_id"
+    t.index ["menu_id", "beverage_id"], name: "index_beverages_menus_on_menu_id_and_beverage_id", unique: true
+  end
+
   create_table "dish_tags", force: :cascade do |t|
     t.integer "dish_id", null: false
     t.integer "tag_id", null: false
@@ -71,6 +78,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
     t.index ["establishment_id"], name: "index_dishes_on_establishment_id"
   end
 
+  create_table "dishes_menus", id: false, force: :cascade do |t|
+    t.integer "menu_id", null: false
+    t.integer "dish_id", null: false
+    t.index ["dish_id", "menu_id"], name: "index_dishes_menus_on_dish_id_and_menu_id"
+    t.index ["menu_id", "dish_id"], name: "index_dishes_menus_on_menu_id_and_dish_id", unique: true
+  end
+
   create_table "establishments", force: :cascade do |t|
     t.string "brand_name"
     t.string "corporate_name"
@@ -83,6 +97,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_establishments_on_user_id"
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string "name"
+    t.integer "establishment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_menus_on_establishment_id"
   end
 
   create_table "opening_hours", force: :cascade do |t|
@@ -145,6 +167,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_09_153838) do
   add_foreign_key "dish_tags", "tags"
   add_foreign_key "dishes", "establishments"
   add_foreign_key "establishments", "users"
+  add_foreign_key "menus", "establishments"
   add_foreign_key "opening_hours", "establishments"
   add_foreign_key "portion_price_histories", "portions"
   add_foreign_key "portions", "beverages"

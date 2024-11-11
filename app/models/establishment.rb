@@ -4,6 +4,8 @@ class Establishment < ApplicationRecord
   has_many :opening_hours, inverse_of: :establishment, dependent: :destroy
   has_many :dishes, dependent: :destroy
   has_many :beverages, dependent: :destroy
+  has_many :menus
+
   accepts_nested_attributes_for :opening_hours
   
   validates :brand_name,:corporate_name, :cnpj, :address, :phone, :email, presence: true

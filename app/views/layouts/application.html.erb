@@ -30,7 +30,9 @@
             <%= link_to 'Meus Pratos', establishment_dishes_path(current_user.establishment.id)%> | 
             <%= link_to 'Minhas Bebidas', establishment_beverages_path(current_user.establishment.id)%> | 
             <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %> |
-            <%= link_to 'Tags', new_tag_path%>
+            <%= link_to 'Tags', new_tag_path%> |
+           <%= link_to 'Cadastar Cardápio', new_establishment_menu_path(current_user.establishment.id) %> |
+           <%= link_to 'Ver Cardápios', establishment_menus_path(current_user.establishment.id) %>
 
             <%= form_with(url: search_path, method: :get) do |f| %>
             <%= f.label :query, 'Buscar' %>

@@ -1,0 +1,33 @@
+<h1>Criar Novo Cardápio</h1>
+
+<%= form_with(model: [@establishment, @menu]) do |form| %>
+  <% if @menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@menu.errors.count, "erro") %>:</h2>
+      <ul>
+        <% @menu.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dishes, "Pratos" %><br>
+    <%= form.collection_select :dish_ids, @establishment.dishes, :id, :name, { prompt: "Selecione pratos" }, { multiple: true } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :beverages, "Bebidas" %><br>
+    <%= form.collection_select :beverage_ids, @establishment.beverages, :id, :name, { prompt: "Selecione bebidas" }, { multiple: true } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Criar Cardápio" %>
+  </div>
+<% end %>

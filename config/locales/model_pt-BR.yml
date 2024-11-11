@@ -6,6 +6,7 @@ pt-BR:
       dish: Prato
       beverage: Bebida
       portion: Porção
+      menu: Cardápio
     attributes:
       user:
         name: Nome
@@ -31,4 +32,6 @@ pt-BR:
         is_alcholic: Alcoólico
       portion:
         description: Descrição
-        price: Preço  
+        price: Preço 
+      menu:
+        name: Nome   

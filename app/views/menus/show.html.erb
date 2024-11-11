@@ -1,0 +1,40 @@
+<h1><%= @menu.name %></h1>
+
+<h2>Pratos</h2>
+<% if @menu.dishes.any? %>
+  <% @menu.dishes.each do |dish| %>
+    <li>
+      <strong><%= dish.name %></strong>
+      <ul>
+        <% dish.portions.each do |portion| %>
+          <li>Porção: <%= portion.description %> | Valor: <%= number_to_currency(portion.price / 100.0) %></li>
+        <% end %>
+      </ul>
+            <%= button_to 'Excluir Prato', remove_dish_establishment_menu_path(@establishment, @menu, dish_id: dish.id), method: :delete, data: { confirm: 'Tem certeza que deseja excluir este prato do cardápio?' } %>
+
+    </li>
+  <% end %>
+<% else %>
+  <p>Nenhum prato adicionado a este cardápio.</p>
+<% end %>
+
+<h2>Bebidas</h2>
+<% if @menu.beverages.any? %>
+  <ul>
+    <% @menu.beverages.each do |beverage| %>
+      <li>
+        <strong><%= beverage.name %></strong>
+        <%= button_to 'Excluir Bebida', remove_beverage_establishment_menu_path(@establishment, @menu, beverage_id: beverage.id), method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta bebida do cardápio?' } %>
+        <ul>
+          <% beverage.portions.each do |portion| %>
+            <li>Porção: <%= portion.description %> | Valor: <%= number_to_currency(portion.price / 100.0) %></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhuma bebida adicionada a este cardápio.</p>
+<% end %>
+
+<%= link_to 'Voltar', establishment_menus_path(current_user.establishment.id) %>

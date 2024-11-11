@@ -12,6 +12,13 @@ Rails.application.routes.draw do
       post 'enabled', on: :member
       post 'disabled', on: :member
     end
+    resources :menus, only: [:new, :create, :index, :show, :update] do
+      member do
+        delete 'remove_dish'
+        delete 'remove_beverage'
+      end
+    end
+
   end
 
   resources :dishes, only: [] do
