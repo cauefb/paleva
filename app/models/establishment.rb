@@ -5,6 +5,7 @@ class Establishment < ApplicationRecord
   has_many :dishes, dependent: :destroy
   has_many :beverages, dependent: :destroy
   has_many :menus
+  has_many :orders
 
   accepts_nested_attributes_for :opening_hours
   

@@ -1,0 +1,28 @@
+<h1>Novo Pedido</h1>
+
+<%= form_with(model: (@order)) do |form| %>
+  <div class="field">
+    <%= form.label :costumer_name, "Nome do Cliente" %>
+    <%= form.text_field :costumer_name, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costumer_phone, "Telefone do Cliente" %>
+    <%= form.telephone_field :costumer_phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :costumer_email, "E-mail do Cliente" %>
+    <%= form.email_field :costumer_email %>
+  </div>
+ <%= form.hidden_field :menu_id, value: @menu.id %>
+  <div class="field">
+    <%= form.label :costumer_doc, "CPF (opcional)" %>
+    <%= form.text_field :costumer_doc %>
+  </div>
+
+  <h2>Itens do Pedido</h2>
+
+  
+  <%= form.submit "Finalizar Pedido" %>
+<% end %>

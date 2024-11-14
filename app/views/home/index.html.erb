@@ -4,9 +4,12 @@
   <ul class="list-group">
     <% @menus.each do |menu| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= menu.name %>
+        <%= menu.name %> id = <%=menu.id %>
         <div>
           <%= link_to 'Ver Detalhes', establishment_menu_path(@establishment, menu), class: "btn btn-primary btn-sm" %>
+                    <%= link_to 'Criar Pedido', new_order_path(menu_id: menu.id), class: "btn btn-primary btn-sm" %>
+
+
         </div>
       </li>
     <% end %>

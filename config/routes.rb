@@ -18,7 +18,7 @@ Rails.application.routes.draw do
         delete 'remove_beverage'
       end
     end
-
+    
   end
 
   resources :dishes, only: [] do
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :beverages, only: [] do
     resources :portions, only: [:index, :show, :new, :create, :edit, :update]
   end
-
+  resources :orders, only: [:new, :create, :index, :show]
   resources :tags
 
   get 'search', to: 'search#search'
