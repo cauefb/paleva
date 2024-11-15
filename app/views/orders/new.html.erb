@@ -1,21 +1,32 @@
+<% if @order.errors.any? %>
+  <div class="error-messages">
+    <h2><%= pluralize(@order.errors.count, "erro") %> impedem este pedido de ser salvo:</h2>
+    <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <h1>Novo Pedido</h1>
 
 <%= form_with(model: (@order)) do |form| %>
   <div class="field">
     <%= form.label :costumer_name, "Nome do Cliente" %>
-    <%= form.text_field :costumer_name, required: true %>
+    <%= form.text_field :costumer_name %>
   </div>
 
   <div class="field">
     <%= form.label :costumer_phone, "Telefone do Cliente" %>
-    <%= form.telephone_field :costumer_phone %>
+    <%= form.text_field :costumer_phone %>
   </div>
 
   <div class="field">
     <%= form.label :costumer_email, "E-mail do Cliente" %>
-    <%= form.email_field :costumer_email %>
+    <%= form.text_field :costumer_email %>
   </div>
- <%= form.hidden_field :menu_id, value: @menu.id %>
+ <%= form.hidden_field :menu_id, value: @menu&.id %>
+
   <div class="field">
     <%= form.label :costumer_doc, "CPF (opcional)" %>
     <%= form.text_field :costumer_doc %>

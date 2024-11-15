@@ -41,5 +41,8 @@ Rails.application.routes.draw do
   end
   resources :tags
   
+  resources :order_items, only: [:destroy]
+
+
   get 'search', to: 'search#search'
 end

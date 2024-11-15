@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
   def new
     @establishment = current_user.establishment
-    @menu = @establishment.menus.find(params[:menu_id]) # Certifique-se de passar o menu_id na URL
+    @menu = @establishment.menus.find_by(id: params[:menu_id]) # Certifique-se de passar o menu_id na URL
     @order = @menu.orders.build
   end
   
@@ -31,12 +31,13 @@ class OrdersController < ApplicationController
       redirect_to select_items_order_path(@order), alert: "Selecione uma porção e quantidade válida."
     end
   end
+  
   def create
     @order = Order.new(order_params)
+    @menu = Menu.find_by(id: params[:order][:menu_id]) 
 
     if @order.save
-      flash[:notice] = 'Pedido iniciado
-      !'
+      flash[:notice] = 'Pedido iniciado!'
 
       redirect_to select_items_order_path(@order)
     else
