@@ -1,0 +1,25 @@
+<%= form_with(url: add_item_order_path(@order), method: :post, local: true) do |f| %>
+  <div class="items-section">
+    <h2>Pratos</h2>
+    <% @dishes.each do |dish| %>
+      <div class="dish-item mb-4">
+        <h3><%= dish.name %></h3>
+        <%= link_to "Selecionar Porções", select_portion_order_path(@order, dish_id: dish.id), class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="items-section">
+    <h2>Bebidas</h2>
+    <% @beverages.each do |beverage| %>
+      <div class="beverage-item mb-4">
+        <h3><%= beverage.name %></h3>
+        <%= link_to "Selecionar Porções", select_portion_order_path(@order, beverage_id: beverage.id), class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# <div class="form-group mt-4">
+    <%= f.submit "Adicionar ao Pedido", class: "btn btn-primary" %>
+  <%# </div> %> 
+<% end %>

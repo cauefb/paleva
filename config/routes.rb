@@ -28,7 +28,17 @@ Rails.application.routes.draw do
   resources :beverages, only: [] do
     resources :portions, only: [:index, :show, :new, :create, :edit, :update]
   end
-  resources :orders, only: [:new, :create, :index, :show]
+  resources :orders do
+    # collection do
+    #   get 'select_items', to: 'orders#select_items'
+    # end
+    member do
+      get :select_items
+      post :add_item
+      get 'select_portion'
+
+    end
+  end
   resources :tags
 
   get 'search', to: 'search#search'

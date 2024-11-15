@@ -1,0 +1,31 @@
+<h2>Selecionar Porção</h2>
+
+<% if @dish %>
+  <h3>Porções para: <%= @dish.name %></h3>
+<% elsif @beverage %>
+  <h3>Porções para: <%= @beverage.name %></h3>
+<% end %>
+
+<%= form_with(url: add_item_order_path(@order), method: :post, local: true) do |f| %>
+  <div class="portions-list">
+    <% @portions.each do |portion| %>
+      <div class="form-check">
+        <%= radio_button_tag 'order_item[portion_id]', portion.id, false, id: "portion_#{portion.id}" %>
+        <%= label_tag "portion_#{portion.id}", "#{portion.description} - #{number_to_currency(portion.price / 100.0, unit: "R$", separator: ",", delimiter: ".", format: "%u %n")}" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'order_item[quantity]', "Quantidade" %>
+    <%= number_field_tag 'order_item[quantity]', 1, min: 1, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'order_item[observation]', "Observação" %>
+    <%= text_area_tag 'order_item[observation]', nil, rows: 3, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Adicionar ao Pedido", class: "btn btn-primary" %>
+<% end %>
+

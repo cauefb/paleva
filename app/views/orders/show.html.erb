@@ -7,4 +7,22 @@
 <p><strong>CPF:</strong> <%= @order.costumer_doc %></p>
 <p><strong>Status:</strong> <%= @order.status %></p>
 
+<h2>Itens do Pedido</h2>
+<% if @order.order_items.any? %>
+  <ul>
+    <% @order.order_items.each do |item| %>
+      <li>
+        <%# <strong>Item:</strong> <%= item.name %><br> %>
+        <strong>Quantidade:</strong> <%= item.quantity %><br>
+        <%# <strong>Preço Unitário:</strong> <%= number_to_currency(item.unit_price / 100.0, unit: "R$") %><br>
+        <%# <strong>Total:</strong> <%= number_to_currency(item.total_price / 100.0, unit: "R$") %> %> %>
+      </li>
+      <hr>
+    <% end %>
+  </ul>
+  <%# <p><strong>Valor Total do Pedido:</strong> <%= number_to_currency(@order.order_items.sum(&:total_price) / 100.0, unit: "R$") %></p> %>
+<% else %>
+  <p>Este pedido não possui itens.</p>
+<% end %>
+
 <%= link_to 'Voltar', orders_path %>

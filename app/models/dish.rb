@@ -1,5 +1,6 @@
 class Dish < ApplicationRecord
   belongs_to :establishment
+  belongs_to :menu
   has_many :portions
 
   has_many :dish_tags, dependent: :destroy

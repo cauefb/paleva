@@ -17,6 +17,7 @@ class MenusController < ApplicationController
   end
 
   def create
+    Rails.logger.debug "Params recebidos: #{params.inspect}"
     @menu = @establishment.menus.build(menu_params)
     begin
       @menu.save!
