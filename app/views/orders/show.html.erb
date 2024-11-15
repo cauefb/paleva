@@ -1,28 +1,51 @@
-<!-- app/views/orders/show.html.erb -->
-<h1>Detalhes do Pedido</h1>
+<div class="container my-5">
+  <h1 class="mb-4">Detalhes do Pedido</h1>
 
-<p><strong>Nome do cliente:</strong> <%= @order.costumer_name %></p>
-<p><strong>Telefone do cliente:</strong> <%= @order.costumer_phone %></p>
-<p><strong>Email do cliente:</strong> <%= @order.costumer_email %></p>
-<p><strong>CPF:</strong> <%= @order.costumer_doc %></p>
-<p><strong>Status:</strong> <%= @order.status %></p>
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Informações do Cliente</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Nome:</strong> <%= @order.costumer_name %></p>
+      <p><strong>Telefone:</strong> <%= @order.costumer_phone %></p>
+      <p><strong>Email:</strong> <%= @order.costumer_email %></p>
+      <p><strong>CPF:</strong> <%= @order.costumer_doc %></p>
+      <p><strong>Status:</strong> <%= @order.status %></p>
+    </div>
+  </div>
 
-<h2>Itens do Pedido</h2>
-<% if @order.order_items.any? %>
-  <ul>
-    <% @order.order_items.each do |item| %>
-      <li>
-        <%# <strong>Item:</strong> <%= item.name %><br> %>
-        <strong>Quantidade:</strong> <%= item.quantity %><br>
-        <%# <strong>Preço Unitário:</strong> <%= number_to_currency(item.unit_price / 100.0, unit: "R$") %><br>
-        <%# <strong>Total:</strong> <%= number_to_currency(item.total_price / 100.0, unit: "R$") %> %> %>
-      </li>
-      <hr>
-    <% end %>
-  </ul>
-  <%# <p><strong>Valor Total do Pedido:</strong> <%= number_to_currency(@order.order_items.sum(&:total_price) / 100.0, unit: "R$") %></p> %>
-<% else %>
-  <p>Este pedido não possui itens.</p>
-<% end %>
+  <div class="card mb-4">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Itens do Pedido</h5>
+    </div>
+    <div class="card-body">
+      <% if @order.order_items.any? %>
+        <ul class="list-group list-group-flush">
+          <% @order.order_items.each do |item| %>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1"><strong>Item:</strong> <%= item.item_name %></h6>
+                  <p class="mb-1"><strong>Quantidade:</strong> <%= item.quantity %></p>
+                  <p class="mb-1"><strong>Observação:</strong> <%= item.observation %></p>
+                  <p class="mb-1"><strong>Preço Unitário:</strong> <%= number_to_currency(item.unit_price / 100.0, unit: "R$") %></p>
+                  <p class="mb-1"><strong>Total:</strong> <%= number_to_currency((item.unit_price * item.quantity) / 100.0, unit: "R$") %></p>
+                </div>
+                <div>
+                  <%= button_to 'Remover Item', order_item_path(item), method: :delete, class: 'btn btn-danger btn-sm', data: { confirm: 'Tem certeza que deseja remover este item?' } %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <div class="card-footer">
+          <p class="text-right font-weight-bold">Valor Total do Pedido: <%= number_to_currency(@order.order_items.sum { |i| i.unit_price * i.quantity } / 100.0, unit: "R$") %></p>
+        </div>
+      <% else %>
+        <p class="text-muted">Este pedido não possui itens.</p>
+      <% end %>
+    </div>
+  </div>
 
-<%= link_to 'Voltar', orders_path %>
+  <%= link_to 'Voltar', orders_path, class: "btn btn-outline-primary" %>
+</div>

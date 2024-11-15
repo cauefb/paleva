@@ -48,11 +48,28 @@ class OrdersController < ApplicationController
   end
 
 def add_item
-  Rails.logger.debug "Params recebidos: #{params.inspect}"
-  puts order_item_params
-  @order_item = @order.order_items.new(order_item_params)
+
+  @order = Order.find(params[:id])
+  portion = Portion.find(params[:order_item][:portion_id])
+
+   # Determina o nome do item dependendo do tipo (Dish ou Beverage)
+   item_name = if portion.dish.present?
+    portion.dish.name
+  elsif portion.beverage.present?
+    portion.beverage.name
+  else
+    'Item desconhecido'
+  end
+
+  @order_item = @order.order_items.build(
+    portion_id: portion.id,
+    quantity: params[:order_item][:quantity],
+    observation: params[:order_item][:observation],
+    item_name: item_name,
+    unit_price: portion.price
+  )
   if @order_item.save
-    redirect_to select_items_order_path(@order), notice: "Item adicionado ao pedido."
+    redirect_to order_path(@order), notice: "Item adicionado ao pedido."
   else
     redirect_to select_items_order_path(@order), alert: "Não foi possível adicionar o item. Verifique os dados e tente novamente."
   end

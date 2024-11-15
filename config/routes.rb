@@ -40,6 +40,6 @@ Rails.application.routes.draw do
     end
   end
   resources :tags
-
+  
   get 'search', to: 'search#search'
 end
