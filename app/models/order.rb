@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :menu
+  belongs_to :establishment
   has_many :order_items, dependent: :destroy
   accepts_nested_attributes_for :order_items
 
@@ -9,14 +10,15 @@ class Order < ApplicationRecord
   validate :email_must_be_valid
   validate :doc_must_be_valid
 
-  enum status: {
-    started: 0,
-    pending: 1,
-    preparing: 2,
-    cancelled: 3,
-    ready: 4,
-    delivered: 5
-  }
+  # enum status: {
+  #   draft: 0,
+  #   pending: 1,
+  #   preparing: 2,
+  #   cancelled: 3,
+  #   ready: 4,
+  #   delivered: 5
+  # }
+  enum :status, [:draft, :pending_kitchen, :preparing, :cancelled, :ready, :delivered]
 
   before_validation :generate_code
 

@@ -2,6 +2,12 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_establishment
   before_action :set_order, only: [:select_items, :add_item]
+
+  def index
+    @orders = current_user.establishment.orders.includes(:menu).order(created_at: :desc)
+  end
+  
+  
   def show
     @order = Order.find(params[:id])
   end
@@ -35,6 +41,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @menu = Menu.find_by(id: params[:order][:menu_id]) 
+    @order.establishment_id = current_user.establishment.id
 
     if @order.save
       flash[:notice] = 'Pedido iniciado!'

@@ -1,0 +1,41 @@
+<h1>Pedidos</h1>
+
+<% if @orders.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nome do Cliente</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th>Status</th>
+        <th>Menu</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.code %></td>
+          <td><%= order.costumer_name %></td>
+          <td><%= order.costumer_email %></td>
+          <td><%= order.costumer_phone %></td>
+          <td><%= order.costumer_doc %></td>
+          <td><%= t("activerecord.attributes.order.statuses.#{order.status}") %></td>
+
+          <td><%= order.menu.name if order.menu %></td>
+          <td><%= l(order.created_at, format: :short) %></td>
+          <td>
+            <%= link_to "Ver", order_path(order), class: "btn btn-primary btn-sm" %>
+            <%= link_to "Editar", edit_order_path(order), class: "btn btn-warning btn-sm" %>
+            <%= link_to "Excluir", order_path(order), method: :delete, data: { confirm: "Tem certeza?" }, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Não há pedidos cadastrados.</p>
+<% end %>

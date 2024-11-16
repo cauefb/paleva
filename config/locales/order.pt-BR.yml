@@ -1,0 +1,11 @@
+pt-BR:
+  activerecord:
+    attributes:
+      order:
+        statuses:
+          draft: 'Aguardando finalização'
+          pending_kitchen: 'Aguardando confirmação da cozinha'
+          preparing: 'Em preparação'
+          cancelled: 'Cancelado'
+          ready: 'Pronto'
+          delivered: 'Entregue'

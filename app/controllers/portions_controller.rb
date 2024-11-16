@@ -11,7 +11,11 @@ class PortionsController < ApplicationController
     # Criação de uma nova porção
     @portion = @parent.portions.build(portion_params)
     if @portion.save
-      redirect_to [@parent, @portion], notice: 'Porção criada com sucesso.'
+      if @parent.is_a?(Dish)
+        redirect_to establishment_dish_path(current_user.establishment, @parent), notice: 'Porção criada com sucesso.'
+      elsif @parent.is_a?(Beverage)
+        redirect_to establishment_beverage_path(current_user.establishment, @parent), notice: 'Porção criada com sucesso.'
+      end
     else
       flash.now[:alert] = @portion.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity

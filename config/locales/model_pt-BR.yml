@@ -7,6 +7,7 @@ pt-BR:
       beverage: Bebida
       portion: Porção
       menu: Cardápio
+      order: Pedido
     attributes:
       user:
         name: Nome
@@ -35,3 +36,9 @@ pt-BR:
         price: Preço 
       menu:
         name: Nome   
+      order:
+        status:
+          started: "Iniciado"
+          pending: "Pendente"
+          completed: "Concluído"
+          canceled: "Cancelado"  
