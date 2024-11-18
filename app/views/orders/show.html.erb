@@ -14,10 +14,14 @@
 </p>
     </div>
   </div>
-  <div class="d-flex justify-content-between">
-    <%= link_to 'Adicionar Item ao Pedido', select_items_order_path(@order), class: 'btn btn-success' %>
-    <%= link_to 'finalizar pedido', orders_path, class: 'btn btn-outline-primary' %> 
-  </div>
+<div class="d-flex justify-content-between">
+  <%= link_to 'Adicionar Item ao Pedido', select_items_order_path(@order), 
+              class: "btn btn-success #{'disabled' if @order.status == 'pending_kitchen'}" %>
+  <%= button_to 'Finalizar Pedido', finalize_order_path(@order), method: :patch, 
+              class: "btn btn-outline-primary #{'disabled' if @order.status == 'pending_kitchen'}", 
+              data: { confirm: 'Tem certeza que deseja finalizar este pedido?' } %>
+</div>
+
   <div class="card mb-4">
     <div class="card-header bg-secondary text-white">
       <h5 class="mb-0">Itens do Pedido</h5>

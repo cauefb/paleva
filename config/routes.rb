@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       get :select_items
       post :add_item
       get 'select_portion'
-
+      patch :finalize
     end
   end
   resources :tags

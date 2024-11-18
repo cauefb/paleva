@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
 
   # Método para adicionar um item ao pedido
   def add_item
+    
     quantity = params[:quantity].to_i
     portion_id = params[:portion_id]
 
@@ -56,6 +57,10 @@ class OrdersController < ApplicationController
   end
 
 def add_item
+  if params[:order_item][:portion_id].blank?
+    flash[:alert] = 'Porção não selecionada. Por favor, escolha uma porção antes de adicionar ao pedido.'
+    redirect_to select_items_order_path(@order) and return
+  end
 
   @order = Order.find(params[:id])
   portion = Portion.find(params[:order_item][:portion_id])
@@ -96,7 +101,16 @@ def select_portion
   @order_item = OrderItem.new
 end
 
+  def finalize
+    @order = Order.find(params[:id])
 
+    if @order.order_items.any?
+      @order.update(status: :pending_kitchen)
+      redirect_to orders_path, notice: "Pedido efetuado com sucesso!"
+    else
+      redirect_to order_path(@order), alert: "Não é possível finalizar o pedido sem itens."
+    end
+  end
 
   private
 
