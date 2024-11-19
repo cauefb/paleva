@@ -43,6 +43,9 @@ Rails.application.routes.draw do
   
   resources :order_items, only: [:destroy]
 
+  resources :employees, only: [:index, :new, :create]
+
+
 
   get 'search', to: 'search#search'
 end

@@ -31,9 +31,11 @@
             <%= link_to 'Minhas Bebidas', establishment_beverages_path(current_user.establishment.id)%> | 
             <%= link_to 'Restaurante', establishment_path(current_user.establishment.id) %> |
             <%= link_to 'Tags', new_tag_path%> |
-           <%= link_to 'Cadastar Cardápio', new_establishment_menu_path(current_user.establishment.id) %> |
-           <%= link_to 'Ver Cardápios', establishment_menus_path(current_user.establishment.id) %> |
-           <%= link_to 'Pedidos', orders_path%> 
+            <%= link_to 'Cadastar Cardápio', new_establishment_menu_path(current_user.establishment.id) %> |
+            <%= link_to 'Ver Cardápios', establishment_menus_path(current_user.establishment.id) %> |
+            <%= link_to 'Pedidos', orders_path%> |
+            <%= link_to 'Cadastrar Novos Usuários', new_employee_path %> |
+            <%= link_to 'Ver Usuários Cadastrados', employees_path%>
 
             <%= form_with(url: search_path, method: :get) do |f| %>
             <%= f.label :query, 'Buscar' %>

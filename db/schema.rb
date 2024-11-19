@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_16_002013) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_18_184433) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -83,6 +83,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_002013) do
     t.integer "dish_id", null: false
     t.index ["dish_id", "menu_id"], name: "index_dishes_menus_on_dish_id_and_menu_id"
     t.index ["menu_id", "dish_id"], name: "index_dishes_menus_on_menu_id_and_dish_id", unique: true
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.integer "establishment_id", null: false
+    t.string "email", null: false
+    t.string "cpf", null: false
+    t.boolean "used", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_employees_on_establishment_id"
   end
 
   create_table "establishments", force: :cascade do |t|
@@ -194,6 +204,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_002013) do
   add_foreign_key "dish_tags", "dishes"
   add_foreign_key "dish_tags", "tags"
   add_foreign_key "dishes", "establishments"
+  add_foreign_key "employees", "establishments"
   add_foreign_key "establishments", "users"
   add_foreign_key "menus", "establishments"
   add_foreign_key "opening_hours", "establishments"

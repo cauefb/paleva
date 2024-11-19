@@ -1,0 +1,19 @@
+<h1>Pré-Cadastros</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>CPF</th>
+      <th>Utilizado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employee.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.cpf %></td>
+        <td><%= user.used? ? "Sim" : "Não" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

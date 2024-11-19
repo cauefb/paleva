@@ -1,0 +1,22 @@
+<% if @employee.errors.any? %>
+  <div class="error-messages">
+    <%# <h2><%= pluralize(@employee.errors.count, "erro") %> impedem este pedido de ser salvo:</h2> 
+    <ul>
+      <% @employee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<h1>Novo Pré-Cadastro</h1>
+<%= form_with model: @employee, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :cpf, "CPF" %>
+    <%= form.text_field :cpf, class: "form-control" %>
+  </div>
+  <%= form.submit "Cadastrar", class: "btn btn-primary" %>
+<% end %>
