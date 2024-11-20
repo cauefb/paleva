@@ -67,4 +67,36 @@ describe "Order API" do
       expect(json_response.length).to eq 4
     end
   end
+
+  context 'GET /api/v1/establishments/establishment_code/orders/order_id' do
+    it "sucesso" do
+      user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+      establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
+        cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
+      dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
+      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+      menu = Menu.create!(
+        name: "Menu do Dia", establishment: establishment
+      )
+      menu.dishes << dish
+      order_1 = Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com')
+      allow(SecureRandom).to receive(:alphanumeric).and_return("OXPDJZJ4")    
+      order_1.pending_kitchen!
+      OrderItem.create!(
+        order: order_1, portion: portion, quantity: 1, observation: "Porção Pequena",
+        item_name: "Lasanha", unit_price: 3500
+      )
+      get api_v1_establishment_order_path(establishment.code, order_1.code)
+      json_response = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(response.content_type).to include 'application/json'
+      expect(json_response["items"].class).to eq Array
+      expect(json_response["status"]).to eq "pending_kitchen"
+      expect(json_response["code"]).to eq "OXPDJZJ4"
+      expect(json_response["items"][0]["name"]).to eq "Lasanha"
+      expect(json_response["items"][0]["observation"]).to eq "Porção Pequena"
+    end
+    
+  end
 end
