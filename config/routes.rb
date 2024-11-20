@@ -45,7 +45,14 @@ Rails.application.routes.draw do
 
   resources :employees, only: [:index, :new, :create]
 
-
-
   get 'search', to: 'search#search'
+
+  namespace :api do
+    namespace :v1 do
+      resources :establishments, param: :code, only: [] do
+        resources :orders, param: :order_code, only: [:index, :show, :update]
+      end
+    end
+  end
+
 end
