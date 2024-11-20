@@ -97,6 +97,27 @@ describe "Order API" do
       expect(json_response["items"][0]["name"]).to eq "Lasanha"
       expect(json_response["items"][0]["observation"]).to eq "Porção Pequena"
     end
+    it "falha se pedido não existir" do
+      user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+      establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
+        cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
+      dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
+      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+      menu = Menu.create!(
+        name: "Menu do Dia", establishment: establishment
+      )
+      menu.dishes << dish
+      order_1 = Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com')   
+      order_1.pending_kitchen!
+      OrderItem.create!(
+        order: order_1, portion: portion, quantity: 1, observation: "Porção Pequena",
+        item_name: "Lasanha", unit_price: 3500
+      )
+      
+      get api_v1_establishment_order_path(establishment.code, "OJFDKEMES")
+
+      expect(response).to have_http_status(404)
+    end
     
   end
 end
