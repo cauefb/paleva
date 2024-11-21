@@ -1,6 +1,6 @@
 class Api::V1::OrdersController < ActionController::API
   before_action :find_establishment
-  before_action :find_order, only: [:show]
+  before_action :find_order, only: [:show, :accept]
 
   def index
       valid_statuses = Order.statuses.keys
@@ -28,6 +28,15 @@ class Api::V1::OrdersController < ActionController::API
       created_at: @order.created_at,
       status: @order.status
     }, status: :ok
+  end
+
+  def accept
+    if @order.pending_kitchen?
+      @order.preparing!
+      render json: { message: 'Pedido aceito e agora está em preparação', status: @order.status }, status: :ok
+    else
+      render json: { error: 'Somente pedidos pendentes podem ser aceitos' }, status: :unprocessable_entity
+    end
   end
 
   private

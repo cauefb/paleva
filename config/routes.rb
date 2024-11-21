@@ -50,7 +50,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :establishments, param: :code, only: [] do
-        resources :orders, param: :order_code, only: [:index, :show, :update]
+        resources :orders, param: :order_code, only: [:index, :show, :update] do
+          member do
+            patch :accept
+          end
+        end
       end
     end
   end

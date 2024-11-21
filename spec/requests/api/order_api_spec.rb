@@ -7,17 +7,17 @@ describe "Order API" do
       establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
         cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
       dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
-      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+       Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
       menu = Menu.create!(
         name: "Menu do Dia", establishment: establishment
       )
       menu.dishes << dish
-      order_1 = Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com')
+       Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com')
       order_2 = Order.create!(menu: menu,establishment: establishment, costumer_name: 'Marta', costumer_email: 'marta@email.com')
       order_2.pending_kitchen!
 
-
       get api_v1_establishment_orders_path(establishment.code), params: {status: "pending_kitchen" }
+
       json_response = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -29,11 +29,11 @@ describe "Order API" do
     
     it "estabelecimento não existe" do
       user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
-      establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
+       Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
         cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
 
       get api_v1_establishment_orders_path('GHSUEOD')
-      json_response = JSON.parse(response.body)
+       JSON.parse(response.body)
 
       expect(response).to have_http_status(404)
     end
@@ -42,7 +42,7 @@ describe "Order API" do
       establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
         cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
       dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
-      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+      Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
       menu = Menu.create!(
         name: "Menu do Dia", establishment: establishment
       )
@@ -120,4 +120,55 @@ describe "Order API" do
     end
     
   end
+
+  context "/api/v1/establishments/establishment_code/orders/code_id/preparing" do
+    it "sucesso" do
+      user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+      establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
+        cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
+        allow(SecureRandom).to receive(:alphanumeric).and_return("ABC123")
+      dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
+      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+      menu = Menu.create!(
+        name: "Menu do Dia", establishment: establishment
+      )
+      menu.dishes << dish
+      order_1 = Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com')
+      allow(SecureRandom).to receive(:alphanumeric).and_return("OIJDE4RT")    
+      order_1.pending_kitchen!
+      OrderItem.create!(
+        order: order_1, portion: portion, quantity: 1, observation: "Porção Pequena",
+        item_name: "Lasanha", unit_price: 3500
+      )
+     
+      patch "/api/v1/establishments/#{establishment.code}/orders/#{order_1.code}/accept"
+
+      expect(response).to have_http_status 200
+      order_1.reload
+      expect(order_1).to be_preparing    
+    end 
+
+    it "pedido não existe" do
+      user = User.create!(name:"João", last_name:"Campos", cpf: CPF.generate, email: "joao@gmail.com", password: "password123456")
+      establishment = Establishment.create!(email:'teste@gmail.com', brand_name: 'teste', corporate_name: 'teste LTDA', 
+        cnpj: '56924048000140',phone: '71992594946', address: 'Rua das Alamedas avenidas', user: user)
+      dish = Dish.create!(name: 'Lasanha', description: 'Bolonhesa', calories: '400', establishment: establishment)
+      portion = Portion.create!(description: 'Porção Pequena', price: 3500, dish: dish )
+      menu = Menu.create!(
+        name: "Menu do Dia", establishment: establishment
+      )
+      menu.dishes << dish
+      order_1 = Order.create!(menu: menu, establishment: establishment, costumer_name: 'Claudio Manoel', costumer_email: 'claudio@email.com') 
+      order_1.pending_kitchen!
+      OrderItem.create!(
+        order: order_1, portion: portion, quantity: 1, observation: "Porção Pequena",
+        item_name: "Lasanha", unit_price: 3500
+      )
+     
+      patch "/api/v1/establishments/#{establishment.code}/orders/ABCD1234/accept"
+
+      expect(response).to have_http_status 404
+    end 
+  end
+  
 end
