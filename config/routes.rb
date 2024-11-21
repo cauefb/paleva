@@ -53,10 +53,10 @@ Rails.application.routes.draw do
         resources :orders, param: :order_code, only: [:index, :show, :update] do
           member do
             patch :accept
+            patch :ready
           end
         end
       end
     end
   end
-
 end
