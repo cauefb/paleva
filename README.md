@@ -1,24 +1,25 @@
-# README
+# PaLevá
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Paleva é um projeto desenvolvido com Ruby on Rails, com foco em gerenciamento de um restaurante na odalidade takeout.
 
-Things you may want to cover:
+Projeto desenvolvido durante o Treinadev 13,oferecido pela campus code.
+## Tecnologias Utilizadas
 
-* Ruby version
+- **Ruby**: Versão 3.2.1
+- **Rails**: Versão 7.2.1
+- **Banco de Dados**:  SQLite
 
-* System dependencies
+## Configuração do Ambiente
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/cauefb/paleva.git
+2. Instale as dependências
+    ```bash
+    bundle install
+3. Configure o banco de dados:
+    ```bash
+    rails db:setup
+4. Inicie o servidor
+    ```bash
+    rails server    
